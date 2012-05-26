@@ -208,8 +208,7 @@ int suspend_devices_and_enter(suspend_state_t state)
 		if (error)
 			goto Close;
 	}
-	if (!suspend_console_deferred)
-		suspend_console();
+	suspend_console();
 	pm_restrict_gfp_mask();
 	suspend_test_start();
 	error = dpm_suspend_start(PMSG_SUSPEND);
@@ -228,8 +227,7 @@ int suspend_devices_and_enter(suspend_state_t state)
 	dpm_resume_end(PMSG_RESUME);
 	suspend_test_finish("resume devices");
 	pm_restore_gfp_mask();
-	if (!suspend_console_deferred)
-		resume_console();
+	resume_console();
  Close:
 	if (suspend_ops->end)
 		suspend_ops->end();
